@@ -1,0 +1,19 @@
+{
+  "name": "tg-bot-1",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Roman B",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch index.js"
+  },
+  "dependencies": {
+    "axios": "^1.15.1",
+    "cheerio": "^1.2.0",
+    "dotenv": "^17.4.2",
+    "node-telegram-bot-api": "^0.67.0",
+    "puppeteer": "^24.42.0"
+  }
+}
