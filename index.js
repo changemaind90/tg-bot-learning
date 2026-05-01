@@ -78,9 +78,9 @@ bot.onText(/\/help/, (msg) => {
   bot.sendMessage(
     chatId,
     `📌 Команды:
-          /погода Москва            — погода
-          /weather Helsinki         — погода
-          /btc                      — курс BTC
-          /parse https://google.com — парсинг сайта`,
+          ⛅ /погода Москва   — погода 
+          🌩️ /weather Moscow — погода 
+          🪙 /btc — курс BTC
+          🖥️ /parse https://google.com — тест-парсинг сайта `,
   );
 });
