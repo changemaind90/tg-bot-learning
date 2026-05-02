@@ -17,7 +17,7 @@ An educational Telegram bot that combines three useful features: weather monitor
 | :--- | :--- | :--- |
 | `/weather` | Weather in a specific city | `/weather London` |
 | `/btc` | Current Bitcoin price | `/btc` |
-| `/parse` | Extract headers from a URL | `/parse https://example.com` |
+| `/parse` | Extract html from a URL | `/parse https://example.com` |
 | `/help` | List of available commands | `/help` |
 
 ---
@@ -43,7 +43,7 @@ An educational Telegram bot that combines three useful features: weather monitor
 | `/weather` | Погода в указанном городе (EN) | `/weather Moscow` |
 | `/погода` | Погода в указанном городе (RU) | `/погода Москва` |
 | `/btc` | Актуальный курс Bitcoin к USD | `/btc` |
-| `/parse` | Получить заголовки с сайта | `/parse https://example.com` |
+| `/parse` | Получить html с сайта | `/parse https://example.com` |
 | `/help` | Список всех команд | `/help` |
 
 ---
