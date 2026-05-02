@@ -41,6 +41,9 @@ async function getWeather(city) {
         `;
     } catch (error) {
     console.error(error);
+    if (error.message.includes('❌')) {
+        throw error;
+    }
     throw new Error(error.message === "❌ Город не найден" ? error.message : "⚠️ Ошибка сервиса Open-Meteo");
   }
 };

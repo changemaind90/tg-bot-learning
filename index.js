@@ -10,6 +10,23 @@ const bot = new TelegramBot(token, { polling: true, baseApiUrl: process.env.BASE
 console.log("БОТ ЗАПУЩЕН!...");
 bot.on("polling_error", (err) => console.log(err.code));
 
+bot.setMyCommands([
+  { command: "start", description: "Запустить бота" },
+  { command: "help", description: "Показать список команд" },
+  { command: "weather", description: "Узнать погоду (на англ.)" },
+  { command: "btc", description: "Курс Биткоина" },
+  { command: "parse", description: "Парсинг сайта" }
+]);
+
+bot.setMyDescription({
+  description: "👋 Привет! Я бот-помощник.\n\n" +
+               "Я умею:\n" +
+               "⛅ Узнавать погоду (/weather)\n" +
+               "🪙 Курс BTC (/btc)\n" +
+               "🖥️ Парсить сайты (/parse)\n\n" +
+               "Нажми /start, чтобы начать!"
+});
+
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   bot.sendSticker(
@@ -18,22 +35,18 @@ bot.onText(/\/start/, (msg) => {
   );
   bot.sendMessage(
     chatId,
-    "Команды: \nПогода: /погода Москва\nКурс валют: /btc",
+    `❓ /help — список всех доступных команд `,
   );
 });
 
 bot.onText(/\/(weather|погода)\s*(.*)/i, async (msg, match) => {
   const chatId = msg.chat.id;
-  const city   = match[2].trim();
+  const city = match[2] ? match[2].trim().replace(/-/g, ' ').replace(/\s+/g, ' ') : null;
 
   if (!city) {
     return bot.sendMessage(
       chatId,
-      `📌 Команды:
-          ⛅ /погода Москва   — погода 
-          🌩️ /weather Moscow — погода 
-          🪙 /btc — курс BTC
-          🖥️ /parse https://google.com — тест-парсинг сайта `,
+      "Пожалуйста, укажите город. \nПример: /погода Санкт-Петербург или /weather Sain-Petersburg",
     );
   }
 
@@ -81,10 +94,12 @@ bot.onText(/\/help/, (msg) => {
   const chatId = msg.chat.id;
   bot.sendMessage(
     chatId,
-    `📌 Команды:
-          ⛅ /погода Москва   — погода 
-          🌩️ /weather Moscow — погода 
-          🪙 /btc — курс BTC
-          🖥️ /parse https://google.com — тест-парсинг сайта `,
+    `📌 Команды:\n
+    🪐 /start — приветствие\n
+    ⛅ /погода Москва   — погода\n
+    🌩️ /weather Moscow — погода\n
+    🪙 /btc — курс BTC\n
+    🖥️ /parse https://google.com — тест-парсинг сайта\n
+    ❓ /help — список всех доступных команд `,
   );
 });
