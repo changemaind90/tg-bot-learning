@@ -29,7 +29,11 @@ bot.onText(/\/(weather|погода)\s*(.*)/i, async (msg, match) => {
   if (!city) {
     return bot.sendMessage(
       chatId,
-      "Пожалуйста, укажите город. \nПример: /погода Санкт-Петербург или /weather Sain-Petersburg",
+      `📌 Команды:
+          ⛅ /погода Москва   — погода 
+          🌩️ /weather Moscow — погода 
+          🪙 /btc — курс BTC
+          🖥️ /parse https://google.com — тест-парсинг сайта `,
     );
   }
 
