@@ -2,7 +2,7 @@ const axios = require('axios');
 
 async function getWeather(city) {
     try{
-        const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=ru&format=json`;
+        const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&format=json`;
         const geoRes = await axios.get(geoUrl);
 
         if(!geoRes.data.results || geoRes.data.results.length === 0){
@@ -44,7 +44,7 @@ async function getWeather(city) {
     if (error.message.includes('❌')) {
         throw error;
     }
-    throw new Error(error.message === "❌ Город не найден" ? error.message : "⚠️ Ошибка сервиса Open-Meteo");
+    throw new Error(error.message + "⚠️ Сервис погоды Open-Meteo временно недоступен");
   }
 };
 
