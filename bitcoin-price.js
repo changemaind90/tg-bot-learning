@@ -13,13 +13,13 @@ async function getCoinPrice(coin) {
         const response    = await axios.get(coin_url, {timeout: 5000});
         const price       = response.data?.[coinId]?.usd;
         console.log(price);
-        /* if (!price) {
-         throw new Error('Неверный ответ от API');
-        } */        
+        if (price === undefined) {
+            throw new Error('Монета не найдена');
+        }
         return price;
     } catch (error) {
-        console.error('Ошибка при получении цены BTC:', error.message);
-        throw new Error('API CoinGecko недоступен');
+        console.error('Ошибка при получении цены монеты:', error.message);
+        throw new Error(error);
     }
 }
 
