@@ -65,7 +65,7 @@ bot.onText(/\/(crypto)\s*(.*)/i, async (msg, match) => {
   if (!coin) {
     return bot.sendMessage(
       chatId,
-      "Пожалуйста, укажите монету. \nПример: /crypto eth",
+      "Пожалуйста, укажите монету. \nПример: /crypto eth | btc | sol | asd",
     );
   }
 
