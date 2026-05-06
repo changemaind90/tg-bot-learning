@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { getWeather }      = require("./weather-command");
-const { getBitcoinPrice } = require("./bitcoin-price");
+const { getCoinPrice } = require("./bitcoin-price");
 const { parseUrl }        = require("./parser/pars");
 
 const TelegramBot = require("node-telegram-bot-api");
@@ -14,7 +14,7 @@ bot.setMyCommands([
   { command: "start", description: "Запустить бота" },
   { command: "help", description: "Показать список команд" },
   { command: "weather", description: "Узнать погоду (на англ.)" },
-  { command: "btc", description: "Курс Биткоина" },
+  { command: "crypto", description: "Курс крипты" },
   { command: "parse", description: "Парсинг сайта" }
 ]);
 
@@ -58,17 +58,23 @@ bot.onText(/\/(weather|погода)\s*(.*)/i, async (msg, match) => {
   }
 });
 
-bot.onText(/\/btc/, async (msg) => {
-    const chatId = msg.chat.id;
+bot.onText(/\/(crypto)\s*(.*)/i, async (msg, match) => {
+  const chatId = msg.chat.id;
+  const coin = match[2] ? match[2].trim().toLowerCase() : null;
 
-    try {
-        const price = await getBitcoinPrice();
-        const text = `💰BTC ${price}`;
-        
-        bot.sendMessage(chatId, text, { parse_mode: 'Markdown' });
-    } catch (error) {
-        bot.sendMessage(chatId, 'Не удалось получить цену. Попробуй позже.');
-    }
+  if (!coin) {
+    return bot.sendMessage(
+      chatId,
+      "Пожалуйста, укажите монету. \nПример: /crypto eth",
+    );
+  }
+
+  try {
+    const report = await getCoinPrice(coin);
+    bot.sendMessage(chatId, report);
+  } catch (error) {
+    bot.sendMessage(chatId, `❌ ${error.message}`);
+  }
 });
 
 bot.onText(/\/parse\s*(.*)/i, async (msg, match) => {
@@ -98,7 +104,7 @@ bot.onText(/\/help/, (msg) => {
     🪐 /start — приветствие\n
     ⛅ /погода Москва   — погода\n
     🌩️ /weather Moscow — погода\n
-    🪙 /btc — курс BTC\n
+    🪙 /crypto btc — курс крипты\n
     🖥️ /parse https://google.com — тест-парсинг сайта\n
     ❓ /help — список всех доступных команд `,
   );

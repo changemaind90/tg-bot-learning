@@ -2,6 +2,7 @@ const { parseWithCheerio } = require('./ch');
 const { parseWithPuppeteer } = require('./pup');
 
 async function parseUrl(url) {
+    
     try {
         console.log(`Запуск Cheerio для: ${url}`);
         const result = await parseWithCheerio(url);

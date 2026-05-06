@@ -1,16 +1,21 @@
 const axios = require('axios');
 
-async function getBitcoinPrice() {
+async function getCoinPrice(coin) {
+    const coins = {
+            "btc":"bitcoin",
+            "eth":"ethereum",
+            "sol":"solana",
+        }
+    const coinId = coins[coin] || coin;
     try {
-        const bitcoin_url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd`;
+        const coin_url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`;
         
-        const response    = await axios.get(bitcoin_url, {timeout: 5000});
-        const data        = response.data;
-        const price       = response.data?.bitcoin?.usd;
+        const response    = await axios.get(coin_url, {timeout: 5000});
+        const price       = response.data?.[coinId]?.usd;
         console.log(price);
-        if (!price) {
+        /* if (!price) {
          throw new Error('Неверный ответ от API');
-        }        
+        } */        
         return price;
     } catch (error) {
         console.error('Ошибка при получении цены BTC:', error.message);
@@ -18,4 +23,4 @@ async function getBitcoinPrice() {
     }
 }
 
-module.exports = { getBitcoinPrice };
+module.exports = { getCoinPrice };
